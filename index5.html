@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Basic Web Page</title>
+        <style>
+            * {
+                padding: 0;
+                margin: 0;
+            }
+            .container {
+                display: flex;
+                justify-content: space-between;
+            }
+            .mainContainer {
+                display: grid;
+                background-color: lightBlue;
+                width: 65%;
+                grid-template-areas:
+                    "header"
+                    "main"
+                    "footer";
+                grid-template-rows: 1fr 3fr 1fr;
+            }
+            .rightContainer {
+                display: grid;
+                width: 30%;
+                background-color: bisque;
+                text-align: center;
+                grid-template-areas:
+                    "navigation"
+                    "footer";
+                grid-template-rows: 4fr 1fr;
+            }
+            .main {
+                grid-area: main;
+                background-color: white;
+                text-align: center;
+                display: flex;
+                justify-content: center;
+                flex-direction: column;
+            }
+            header {
+                display: grid;
+                grid-template-columns: 2fr 1fr;
+                align-items: center;
+                text-align: left;
+                grid-area: header;
+            }
+            footer {
+                margin: 10px;
+                align-items: center;
+            }
+            .navigation {
+                background-color: lightGreen;
+                grid-area: navigation;
+                vertical-align: middle;
+                display: flex;
+                justify-content: center;
+            }
+            .mainContainer>footer {
+                text-align: right;
+                display: grid;
+                grid-template-columns: 1fr 2fr;
+                align-items: center;
+                grid-area: footer;
+            }
+            .rightContainer>footer {
+                text-align: center;
+            }
+            .inner {
+                background-color: white;
+                text-align: center;
+                margin: 10px;
+            }
+            .headerText {
+                margin: 10px;
+            }
+            img {
+                width: 100%;
+                height: 100%;
+            }
+        </style>
+		<script>
+			onchange = null;
+			function backgroundChange(elID) {
+				if (onchange != null) {
+					return;
+				}
+				var el = document.getElementById(elID);
+				onchange = el;
+				inid = "in" + elID;
+				el.insertAdjacentHTML("beforeend", '<div id="d'+inid+'"><br><input type="file" id="'+inid+'"><br><button type="submit" onclick=\'backgroundSave("'+elID+'");\'>Зберегти</button>');
+				/*document.querySelector("#"+inid).addEventListener("change", function () {
+					const reader = new FileReader();
+					
+					reader.addEventListener("load", () => {
+						localStorage.setItem(elID, reader.result);
+					});
+					
+					reader.readAsDataURL(this.files[0]);
+				});*/
+			}
+			function backgroundSave(elID) {
+				var input = document.getElementById("in"+elID);
+				if (input.files && input.files[0]) {
+					var reader = new FileReader();
+					reader.onload = function (e) {
+						localStorage.setItem(elID, e.target.result);
+						updateBackground(elID);
+						document.getElementById('din'+elID).remove();
+						onchange = null;
+					};
+					reader.readAsDataURL(input.files[0]);
+				}
+			}
+			function backgroundClear(elID) {
+				localStorage.removeItem(elID);
+				document.getElementById('din'+elID).remove();
+				document.getElementById(elID).style.backgroundImage = "";
+			}
+			function updateBackground(elID) {
+				if (localStorage.getItem(elID) != null) {
+					var elem = document.getElementById(elID);
+					elem.style.backgroundImage = "url("+localStorage.getItem(elID)+")";
+					elem.insertAdjacentHTML("beforeend", '<button type="submit" id="din'+elID+'" onclick=\'backgroundClear("'+elID+'");\'>Видалити</button>');
+				}
+			}
+		</script>
+    </head>
+    <body>
+        <div class="container">
+        <div class="mainContainer">
+            <header id="el1">
+                <p class="headerText">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vitae hendrerit nibh. Nam vitae varius ligula, quis iaculis sem. Sed vel aliquam velit, id dictum felis. Morbi quam lectus, scelerisque ac semper vitae, mattis nec elit. Vestibulum et fringilla nisi, id dapibus ante. Duis in turpis dui. Ut dictum mauris at diam pulvinar elementum. Fusce finibus eget sem at condimentum. Proin posuere lectus nisi, in condimentum sem sagittis consectetur.</p>
+
+                    <h3 class="inner" id="s1">Make Uganda Great again!  </h3>
+
+            </header>
+            <div class="main" id="el3">
+                <p>
+                    Proin mollis tellus at velit malesuada, id pulvinar nisi euismod. Nullam ac nisl faucibus, consectetur ligula eu, elementum sapien. Aliquam euismod porta augue, ac pretium felis sollicitudin a. Suspendisse euismod lacus in lacus vehicula, ac accumsan quam vestibulum. Vestibulum dui ex, rutrum nec neque id, aliquet vulputate lorem. Pellentesque et dui non orci efficitur iaculis. Aenean eu suscipit purus, ac rhoncus nunc. Sed vel justo quis libero gravida suscipit ac nec metus. Aliquam hendrerit enim ac orci suscipit congue ac sed ante. Pellentesque vestibulum, tortor sed egestas maximus, mauris nulla varius enim, at tristique sapien dolor sed nunc. Suspendisse potenti. Mauris diam nunc, scelerisque et venenatis sed, tristique pulvinar turpis. Nam sed venenatis lorem, id suscipit ligula. Vivamus sit amet ullamcorper orci, at placerat orci. Proin mi ante, gravida a tempor at, laoreet at mi. Etiam finibus dapibus purus, pharetra tristique magna auctor ac.
+                </p>
+                <p>
+                    Nunc quis mattis nisi, sed vehicula dolor. Nam consectetur nulla in varius aliquam. Pellentesque congue feugiat orci et faucibus. Etiam dignissim pellentesque nisl non dictum. Proin accumsan vestibulum magna, in mollis urna rutrum et. Praesent maximus varius ipsum, id consequat nunc mollis quis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Proin non nunc odio. Donec pellentesque augue semper blandit mattis.
+                </p>
+                <p>
+                    Nunc ac nibh condimentum, tincidunt ligula sit amet, rhoncus purus. Nunc eleifend sem nec nunc facilisis, eget mollis sem bibendum. Donec sed efficitur felis. Nam ut porttitor lacus. Pellentesque eget tempor turpis, eget luctus nibh. Mauris bibendum aliquam ipsum, vitae ultricies eros luctus eu. Mauris semper nisl erat, vitae egestas tortor maximus vel. Nulla euismod vehicula tellus nec dignissim. Quisque eros orci, ultrices at euismod eget, pellentesque eu dui. Duis non odio dui. Sed pellentesque risus nec felis posuere, a pulvinar nunc laoreet. Proin quis nulla luctus, iaculis sapien at, gravida enim. In lobortis euismod vehicula. Donec commodo et sem non pellentesque. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae;
+                </p>
+				<ul>
+					<li><button onclick='backgroundChange("el1");'>Змінити фон в 1-му блоці</button></li>
+					<li><button onclick='backgroundChange("el2");'>Змінити фон в 2-му блоці</button></li>
+					<li><button onclick='backgroundChange("el3");'>Змінити фон в 3-му блоці</button></li>
+					<li><button onclick='backgroundChange("el4");'>Змінити фон в 4-му блоці</button></li>
+					<li><button onclick='backgroundChange("el5");'>Змінити фон в 5-му блоці</button></li>
+				</ul>
+            </div>
+            <footer id="el4">
+                <span class="innerHeader">
+                    <h3 class="inner" id="s2">Destroy Uganda! </h3>
+                </span>
+                Donec a augue lectus. Aliquam suscipit urna ut scelerisque aliquet. Pellentesque fringilla interdum mi, pellentesque euismod ex eleifend at. Ut scelerisque urna risus. Pellentesque sem massa, egestas blandit orci sit amet, semper ultricies lacus. Suspendisse sit amet elit eget nunc rhoncus aliquet ac sit amet magna. Phasellus velit enim, ultrices vitae porttitor sed, commodo et ante. Aenean malesuada, lorem sed molestie efficitur, libero sapien tincidunt nulla, eu auctor magna turpis eget nisl. Quisque consequat justo id maximus scelerisque. Aenean eget elit eget ante pulvinar mattis. Sed commodo diam ut leo laoreet, at semper enim pellentesque. Cras eget velit ipsum.
+            </footer>
+        </div>
+        <div class="rightContainer">
+            <nav class="navigation" id="el2">
+                <ul>
+                    <li><a href="index.html">Page1</a></li>
+                    <li><a href="index2.html">Page2</a></li>
+                    <li><a href="index3.html">Page3</a></li>
+                    <li><a href="index4.html">Page4</a></li>
+                    <li><a href="index5.html">Page5</a></li>
+                </ul>
+            </nav>
+            <footer id="el5">
+                Vestibulum cursus urna vel lorem hendrerit, rhoncus porttitor diam rhoncus. Nam semper mi ante, ac iaculis ex aliquet in. Quisque pulvinar id nibh id interdum. Nullam aliquet rhoncus nisl, suscipit tincidunt metus pellentesque non. In ut scelerisque velit, sed lobortis risus. Ut facilisis neque sem, vitae bibendum ligula sagittis sit amet. Etiam viverra condimentum aliquet.
+            </footer>
+        </div>
+        </div>
+    </body>
+	<script>
+		updateBackground("el1");
+		updateBackground("el2");
+		updateBackground("el3");
+		updateBackground("el4");
+		updateBackground("el5");
+	</script>
+</html>

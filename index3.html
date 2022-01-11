@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Basic Web Page</title>
+		<meta charset="UTF-8">
+        <style>
+            * {
+                padding: 0;
+                margin: 0;
+            }
+            .container {
+                display: flex;
+                justify-content: space-between;
+            }
+            .mainContainer {
+                display: grid;
+                background-color: lightBlue;
+                width: 65%;
+                grid-template-areas:
+                    "header"
+                    "main"
+                    "footer";
+                grid-template-rows: 1fr 3fr 1fr;
+            }
+            .rightContainer {
+                display: grid;
+                width: 30%;
+                background-color: bisque;
+                text-align: center;
+                grid-template-areas:
+                    "navigation"
+                    "footer";
+                grid-template-rows: 4fr 1fr;
+            }
+            .main {
+                grid-area: main;
+                background-color: white;
+                text-align: center;
+                display: flex;
+                justify-content: center;
+                flex-direction: column;
+            }
+            header {
+                display: grid;
+                grid-template-columns: 2fr 1fr;
+                align-items: center;
+                text-align: left;
+                grid-area: header;
+            }
+            footer {
+                margin: 10px;
+                align-items: center;
+            }
+            .navigation {
+                background-color: lightGreen;
+                grid-area: navigation;
+                vertical-align: middle;
+                display: flex;
+                justify-content: center;
+            }
+            .mainContainer>footer {
+                text-align: right;
+                display: grid;
+                grid-template-columns: 1fr 2fr;
+                align-items: center;
+                grid-area: footer;
+            }
+            .rightContainer>footer {
+                text-align: center;
+            }
+            .inner {
+                background-color: white;
+                text-align: center;
+                margin: 10px;
+            }
+            .headerText {
+                margin: 10px;
+            }
+            img {
+                width: 100%;
+                height: 100%;
+            }
+        </style>
+		<script>
+			function formHandler() {
+				var form = document.forms.input;
+				var text = form.elements.text.value;
+				var word_count = text.split(" ").length;
+				alert("Кількість слів: " + word_count.toString());
+				document.cookie="word_count=" + word_count.toString();
+			}
+		</script>
+    </head>
+    <body>
+        <div class="container">
+        <div class="mainContainer">
+            <header>
+                <p class="headerText">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vitae hendrerit nibh. Nam vitae varius ligula, quis iaculis sem. Sed vel aliquam velit, id dictum felis. Morbi quam lectus, scelerisque ac semper vitae, mattis nec elit. Vestibulum et fringilla nisi, id dapibus ante. Duis in turpis dui. Ut dictum mauris at diam pulvinar elementum. Fusce finibus eget sem at condimentum. Proin posuere lectus nisi, in condimentum sem sagittis consectetur.</p>
+
+                    <h3 class="inner" id="s1">Make Uganda Great again!  </h3>
+
+            </header>
+            <div class="main" id="main">
+                <form name="input" onsubmit="formHandler();">
+					<p>Введіть текст!</p>
+					<input name="text"><br>
+					<input type="submit">
+				</form>
+            </div>
+            <footer>
+                <span class="innerHeader">
+                    <h3 class="inner" id="s2">Destroy Uganda! </h3>
+                </span>
+                Donec a augue lectus. Aliquam suscipit urna ut scelerisque aliquet. Pellentesque fringilla interdum mi, pellentesque euismod ex eleifend at. Ut scelerisque urna risus. Pellentesque sem massa, egestas blandit orci sit amet, semper ultricies lacus. Suspendisse sit amet elit eget nunc rhoncus aliquet ac sit amet magna. Phasellus velit enim, ultrices vitae porttitor sed, commodo et ante. Aenean malesuada, lorem sed molestie efficitur, libero sapien tincidunt nulla, eu auctor magna turpis eget nisl. Quisque consequat justo id maximus scelerisque. Aenean eget elit eget ante pulvinar mattis. Sed commodo diam ut leo laoreet, at semper enim pellentesque. Cras eget velit ipsum.
+            </footer>
+        </div>
+        <div class="rightContainer">
+            <nav class="navigation">
+                <ul>
+                    <li><a href="index.html">Page1</a></li>
+                    <li><a href="index2.html">Page2</a></li>
+                    <li><a href="index3.html">Page3</a></li>
+                    <li><a href="index4.html">Page4</a></li>
+                    <li><a href="index5.html">Page5</a></li>
+                </ul>
+            </nav>
+            <footer>
+                Vestibulum cursus urna vel lorem hendrerit, rhoncus porttitor diam rhoncus. Nam semper mi ante, ac iaculis ex aliquet in. Quisque pulvinar id nibh id interdum. Nullam aliquet rhoncus nisl, suscipit tincidunt metus pellentesque non. In ut scelerisque velit, sed lobortis risus. Ut facilisis neque sem, vitae bibendum ligula sagittis sit amet. Etiam viverra condimentum aliquet.
+            </footer>
+        </div>
+        </div>
+    </body>
+	<script>
+		var word_count = document.cookie.match(/word_count=(\d+)/);
+		if (word_count) {
+			var to_clear = confirm("Кількість слів: " + word_count[1] + "\nОчистити куки?");
+			if (to_clear) {
+				document.cookie = "word_count=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+			}
+			else {
+				document.forms.input.style.display = "none";
+				alert("У вас наявні куки - обновіть сторінку!");
+			}
+		}
+	</script>
+</html>
